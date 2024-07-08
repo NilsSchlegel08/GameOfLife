@@ -9,18 +9,20 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
+import org.jetbrains.annotations.Nullable;
 
 public class GameOfLife extends JFrame {
+
     private static final int SIZE = 50;
     private static final int CELL_SIZE = 10;
     private boolean[][] grid;
+    @Nullable
     private Timer timer;
 
     public GameOfLife() {
         setTitle("Conway's Game of Life");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(SIZE * CELL_SIZE, SIZE * CELL_SIZE);
         setLocationRelativeTo(null);
 
@@ -50,6 +52,10 @@ public class GameOfLife extends JFrame {
 
         pack();
         setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(GameOfLife::new);
     }
 
     private void initializeGrid() {
@@ -125,14 +131,5 @@ public class GameOfLife extends JFrame {
         }
 
         return count;
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new GameOfLife();
-            }
-        });
     }
 }
