@@ -39,19 +39,31 @@ public class GameOfLife extends JFrame {
         panel.setPreferredSize(new Dimension(SIZE * CELL_SIZE, SIZE * CELL_SIZE));
         add(panel);
 
+        setupButtonPanel();
+
+        pack();
+        setVisible(true);
+    }
+
+    private void setupButtonPanel() {
         JButton startButton = new JButton("Start");
         startButton.addActionListener(e -> startSimulation());
 
         JButton stopButton = new JButton("Stop");
         stopButton.addActionListener(e -> stopSimulation());
 
+        JButton resetButton = new JButton("Reset");
+        resetButton.addActionListener(e -> {
+            resetGrid();
+            initializeGrid();
+            repaint();
+        });
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(startButton);
         buttonPanel.add(stopButton);
+        buttonPanel.add(resetButton);
         add(buttonPanel, BorderLayout.SOUTH);
-
-        pack();
-        setVisible(true);
     }
 
     public static void main(String[] args) {
@@ -107,7 +119,7 @@ public class GameOfLife extends JFrame {
                     newGrid[i][j] = neighbors >= 2 && neighbors <= 3;
                 } else {
                     if (neighbors == 3) {
-                        newGrid[i][j] = true; // Becomes alive
+                        newGrid[i][j] = true;
                     }
                 }
             }
@@ -131,5 +143,13 @@ public class GameOfLife extends JFrame {
         }
 
         return count;
+    }
+
+    private void resetGrid() {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                grid[i][j] = false;
+            }
+        }
     }
 }
